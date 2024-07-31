@@ -63,7 +63,7 @@ function closeModal() {
 
 async function loadAddedBooks() {
   try {
-    const response = await fetch('http://localhost:3000/api/books')
+    const response = await fetch('https://limecbooks.onrender.com/api/books')
     const data = await response.json()
     console.log('Books loaded:', data)
 
@@ -97,7 +97,7 @@ async function addBook(event) {
   const description = formData.get('description')
 
   try {
-    const response = await fetch(`http://localhost:3000/api/books`, {
+    const response = await fetch(`https://limecbooks.onrender.com/api/books`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
