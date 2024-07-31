@@ -1,0 +1,116 @@
+/* Header */
+
+header {
+  /* background-color: #333; */
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+}
+
+nav {
+  /* background-color: #444; */
+  padding: 10px 20px;
+  text-align: center;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin-right: 20px;
+}
+
+/* Container */
+
+.container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+.input {
+  display: flex;
+  justify-content: center;
+}
+
+/* Card */
+
+.backgroundImg {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.book {
+  /* border: 1px solid #ccc; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 20px;
+  background-color: #151c25;
+}
+
+.book img {
+  max-width: 200px;
+  max-height: 200px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  float: left;
+}
+
+.containerImg {
+  display: flex;
+  justify-content: center;
+}
+
+.book-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+.book-content h3 {
+  margin-top: 0;
+}
+
+.book-content p {
+  margin-bottom: 10px;
+  color: #ccc;
+}
+
+.book-content button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.book-content button:hover {
+  background-color: #0056b3;
+}
+
+@media screen and (max-width: 768px) {
+  .book {
+    flex-wrap: wrap;
+  }
+}
+
+/* Footer */
+
+footer {
+  position: fixed;
+  text-align: center;
+  bottom: 0;
+  max-width: inherit;
+  width: 100%;
+  background-color: #202b38;
+}
