@@ -15,7 +15,11 @@ const mongoUri = process.env.MONGODB_URI
 
 app.use(morgan('dev'))
 app.use(express.json())
-app.use(cors())
+app.use(
+  cors({
+    origin: 'https://limecbooks.netlify.app/'
+  })
+)
 
 app.use('/', router)
 
