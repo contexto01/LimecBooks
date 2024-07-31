@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express'
+import express from 'express'
 import router from './router/books'
 import morgan from 'morgan'
 import dotenv from 'dotenv'
@@ -10,13 +10,6 @@ dotenv.config()
 const app = express()
 const port = process.env.PORT || 3000
 const mongoUri = process.env.MONGODB_URI
-
-interface Book {
-  id: string
-  title: string
-  author: string
-  description: string
-}
 
 // let db: Book[] = [] // Define db as an array of Book objects
 
