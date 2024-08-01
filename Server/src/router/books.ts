@@ -45,4 +45,9 @@ router.delete('/api/books/:id', async (req, _res) => {
   await BookSchema.findByIdAndDelete(req.params.id)
 })
 
+// delete all books
+router.delete('/api/books', async (_req, _res) => {
+  await BookSchema.deleteMany({})
+})
+
 export default router
