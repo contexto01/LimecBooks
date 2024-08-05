@@ -18,6 +18,7 @@ router.post('/api/books', async (req, res) => {
     title: req.body.title,
     author: req.body.author,
     description: req.body.description,
+    idBook: req.body.idBook,
     status: req.body.status,
     createdAt: new Date(),
     updatedAt: new Date()
