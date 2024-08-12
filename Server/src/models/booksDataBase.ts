@@ -4,6 +4,7 @@ const BookSchema = new mongoose.Schema({
   title: { type: String, required: true },
   author: { type: String, required: true },
   description: { type: String, required: true },
+  img: { type: String, required: false },
   idBook: { type: String, required: true }
   // coso: { type: String, required: true }
 })

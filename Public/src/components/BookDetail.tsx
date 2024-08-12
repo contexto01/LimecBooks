@@ -1,9 +1,10 @@
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
+import { Book } from '../types'
 
 const BookDetail = () => {
   const { id } = useParams()
-  const [book, setBook] = useState<any>(null) // Puedes definir una interfaz específica para el libro
+  const [book, setBook] = useState<Book | null>(null) // Puedes definir una interfaz específica para el libro
 
   const addBook = () => {
     fetch('https://limecbooks.onrender.com/api/books', {
@@ -14,21 +15,20 @@ const BookDetail = () => {
       body: JSON.stringify({
         title: volumeInfo.title,
         author: volumeInfo.authors[0],
-        description: volumeInfo.description
+        description: volumeInfo.description,
+        img: volumeInfo.imageLinks?.thumbnail,
+        idBook: id
       })
-    })
+    }).catch((error) => console.log(error))
   }
 
-  const removeBook = () => {
-    fetch('https://limecbooks.onrender.com/api/books', {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        id: id
-      })
+  const removeBook = ({ id }: any) => {
+    // fetch(${"https://limecbooks.onrender.com/api/books"}, {
+    //   method: 'DELETE'})
+    fetch(`https://limecbooks.onrender.com/api/books/${id}`, {
+      method: 'DELETE'
     })
+    console.log(id)
   }
 
   useEffect(() => {
@@ -62,7 +62,7 @@ const BookDetail = () => {
       </button>
       <button
         className="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-        onClick={() => removeBook()}
+        onClick={() => removeBook({ id })}
       >
         Quitar de la lista
       </button>
