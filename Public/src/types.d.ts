@@ -1,11 +1,19 @@
-export interface Book {
-  id: string
-  volumeInfo: {
-    title: string
-    authors: string[]
-    description: string
-    imageLinks: {
-      thumbnail: string
-    }
-  }
+export interface BookBaseData {
+  _id: string
+  title: string
+  author: string
+  description: string
+  img: string
 }
+
+// export interface BookBaseData {
+//   id: string
+//   volumeInfo: {
+//     title: string
+//     authors: string[]
+//     description: string
+//     imageLinks: {
+//       thumbnail: string
+//     }
+//   }
+// }

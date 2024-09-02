@@ -13,7 +13,7 @@ function HomePage() {
 
   return (
     <article className="flex justify-center flex-col mt-10 mx-auto p-5">
-      <h2 className="text-3xl font-bold text-center">Bienvenido</h2>
+      {/* <h2 className="text-3xl font-bold text-center">Bienvenido</h2> */}
       <div className="flex justify-center gap-4 flex-wrap">
         <button onClick={SearchBook}>Buscar libros</button>
         <button onClick={BooksAdded}>Libros añadidos</button>

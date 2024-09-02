@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom'
+import { Toaster, toast } from 'sonner'
 import { useEffect, useState } from 'react'
 import { Book } from '../types'
 
@@ -7,6 +8,10 @@ const BookDetail = () => {
   const [book, setBook] = useState<Book | null>(null) // Puedes definir una interfaz específica para el libro
 
   const addBook = () => {
+    toast.success('Añadiendo el libro a la lista', {
+      description: volumeInfo.title,
+      icon: <p>✅</p>
+    })
     fetch('https://limecbooks.onrender.com/api/books', {
       method: 'POST',
       headers: {
@@ -23,6 +28,10 @@ const BookDetail = () => {
   }
 
   const removeBook = ({ id }: any) => {
+    toast.error('Quitando el libro de la lista', {
+      description: volumeInfo.title,
+      icon: <p>🗑️</p>
+    })
     // fetch(${"https://limecbooks.onrender.com/api/books"}, {
     //   method: 'DELETE'})
     fetch(`https://limecbooks.onrender.com/api/books/${id}`, {
@@ -66,6 +75,7 @@ const BookDetail = () => {
       >
         Quitar de la lista
       </button>
+      <Toaster />
     </div>
   )
 }

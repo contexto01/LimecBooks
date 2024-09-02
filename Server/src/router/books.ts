@@ -13,6 +13,28 @@ router.get('/api/books', async (_req, res) => {
   res.json(books)
 })
 
+router.get('/api/books/:name', async (req, res) => {
+  try {
+    const { name } = req.params // Obtener el nombre del libro desde los parámetros de la URL
+
+    // Asegurarse de que el nombre no sea vacío
+    if (!name || name.trim() === '') {
+      return res.status(400).json({ message: 'El parámetro de búsqueda no puede estar vacío' })
+    }
+
+    // Buscar libros que coincidan parcialmente con el nombre proporcionado
+    const books = await BookSchema.find({ title: { $regex: new RegExp(name, 'i') } })
+
+    if (books.length === 0) {
+      return res.status(404).json({ message: 'No se encontraron libros con ese nombre' })
+    }
+
+    res.json(books)
+  } catch (error) {
+    res.status(500).json({ message: 'Error al buscar libros', error })
+  }
+})
+
 router.post('/api/books', async (req, res) => {
   const book = new BookSchema({
     title: req.body.title,
@@ -44,8 +66,8 @@ router.put('/api/books/:id', async (req, res) => {
 })
 
 router.delete('/api/books/:id', async (req, _res) => {
-  // await BookSchema.findByIdAndDelete(req.params.id)
-  await BookSchema.deleteOne({ idBook: req.params.id })
+  await BookSchema.findByIdAndDelete(req.params.id)
+  // await BookSchema.deleteOne({ idBook: req.params.id })
 })
 
 // delete all books
