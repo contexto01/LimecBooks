@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { Request, Response } from 'express'
 import BookSchema from '../models/booksDataBase'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -13,7 +13,7 @@ router.get('/api/books', async (_req, res) => {
   res.json(books)
 })
 
-router.get('/api/books/:name', async (req, res) => {
+router.get('/api/books/:name', async (req: Request<{ name: string }>, res: Response) => {
   try {
     const { name } = req.params // Obtener el nombre del libro desde los parámetros de la URL
 
@@ -29,9 +29,9 @@ router.get('/api/books/:name', async (req, res) => {
       return res.status(404).json({ message: 'No se encontraron libros con ese nombre' })
     }
 
-    res.json(books)
+    return res.json(books) // Asegúrate de usar 'return' para finalizar la ejecución
   } catch (error) {
-    res.status(500).json({ message: 'Error al buscar libros', error })
+    return res.status(500).json({ message: 'Error al buscar libros', error })
   }
 })
 
@@ -52,12 +52,12 @@ router.post('/api/books', async (req, res) => {
   res.json(book)
 })
 
-router.get('/api/books/:id', async (req, res) => {
+router.get('/api/books/:id', async (req: Request<{ id: string }>, res: Response) => {
   const book = await BookSchema.findById(req.params.id)
   res.json(book)
 })
 
-router.put('/api/books/:id', async (req, res) => {
+router.put('/api/books/:id', async (req: Request<{ id: string }>, res: Response) => {
   const book = await BookSchema.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true
@@ -65,7 +65,7 @@ router.put('/api/books/:id', async (req, res) => {
   res.json(book)
 })
 
-router.delete('/api/books/:id', async (req, _res) => {
+router.delete('/api/books/:id', async (req: Request<{ id: string }>, _res: Response) => {
   await BookSchema.findByIdAndDelete(req.params.id)
   // await BookSchema.deleteOne({ idBook: req.params.id })
 })
