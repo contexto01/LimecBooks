@@ -16,7 +16,7 @@ function Book({
   return (
     <div
       key={book._id}
-      className="flex flex-col bg-slate-400 dark:bg-slate-800 hover:bg-opacity-50 transition-all p-4 bg-opacity-25 dark:bg-opacity-25 gap-y-4 rounded cursor-pointer"
+      className="flex flex-col justify-between bg-slate-400 dark:bg-slate-800 hover:bg-opacity-50 transition-all p-4 bg-opacity-25 dark:bg-opacity-25 gap-y-4 rounded cursor-pointer"
       onClick={() => openModal(book)}
     >
       <h3 className="text-xl font-bold m-0">{book.title}</h3>
@@ -27,7 +27,7 @@ function Book({
       />
       <p className="text-muted-foreground">{book.author}</p>
       <div>
-        <button>✏️</button>
+        {/* <button>✏️</button> */}
         <button onClick={DeleteBook}>❌</button>
       </div>
     </div>

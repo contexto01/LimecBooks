@@ -1,10 +1,10 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import SearchBook from './SearchBook'
+import { BrowserRouter as Router } from 'react-router-dom'
+// import SearchBook from './SearchBook'
 import Header from './header'
 import Footer from './footer'
-import BookDetail from './components/BookDetail'
+// import BookDetail from './components/BookDetail'
 import BooksAdded from './BooksAdded'
-import HomePage from './HomePage'
+// import HomePage from './HomePage'
 import NavBar from './NavBar'
 
 function App() {
