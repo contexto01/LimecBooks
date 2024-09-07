@@ -11,15 +11,9 @@ function Book({
   const { removeBook } = useBooksStore((state) => ({
     removeBook: state.removeBook
   }))
-  const DeleteBook = () => {
-    fetch(`https://limecbooks.onrender.com/api/books/${book._id}`, {
-      method: 'DELETE'
-    })
-    console.log(book._id)
-  }
   return (
     <div
-      key={book._id}
+      key={book.idBook}
       className="flex flex-col justify-between bg-slate-400 dark:bg-slate-800 hover:bg-opacity-50 transition-all p-4 bg-opacity-25 dark:bg-opacity-25 gap-y-4 rounded cursor-pointer"
       onClick={() => openModal(book)}
     >
@@ -35,7 +29,7 @@ function Book({
         <button
           onClick={(e) => {
             e.stopPropagation()
-            removeBook(book._id)
+            removeBook(book.idBook)
           }}
         >
           ❌

@@ -7,7 +7,6 @@ import { Toaster } from 'sonner'
 import ModalAddBook from './components/ModalAddBook'
 import Book from './components/Book'
 import { useBooksStore } from './global/booksStore'
-import { useFetchBooks } from './data/books'
 
 function BooksAdded() {
   // const [booksAdded, setBooksAdded] = useState<BookBaseData[]>([])
@@ -18,7 +17,7 @@ function BooksAdded() {
   )
   // const [isLoading, setIsLoading] = useState(true)
   // const { books, booksChange } = useBooksStore()
-  const { books, loading, fetchBooks, addBook } = useBooksStore((state) => ({
+  const { books, loading, fetchBooks } = useBooksStore((state) => ({
     books: state.books,
     loading: state.loading,
     fetchBooks: state.fetchBooks,
