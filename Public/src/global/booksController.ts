@@ -30,5 +30,5 @@ export const removeBook = (idBook: string) => {
   fetch(`https://limecbooks.onrender.com/api/books/${idBook}`, {
     method: 'DELETE'
   })
-  console.log(idBook)
+  console.log(`https://limecbooks.onrender.com/api/books/${idBook}`)
 }
