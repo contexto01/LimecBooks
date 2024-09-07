@@ -66,8 +66,8 @@ router.put('/api/books/:id', async (req: Request<{ id: string }>, res: Response)
 })
 
 router.delete('/api/books/:id', async (req: Request<{ id: string }>, _res: Response) => {
-  await BookSchema.findByIdAndDelete(req.params.id)
-  // await BookSchema.deleteOne({ idBook: req.params.id })
+  // await BookSchema.findByIdAndDelete(req.params.id)
+  await BookSchema.deleteOne({ idBook: req.params.id })
 })
 
 // delete all books
