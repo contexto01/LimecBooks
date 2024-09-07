@@ -35,12 +35,19 @@ const ModalAddBook = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
     fetch(`https://www.googleapis.com/books/v1/volumes?q=${values.title}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data)
+        console.log({
+          title: data.items[0].volumeInfo.title ?? '',
+          author: data.items[0].volumeInfo.authors[0] ?? '',
+          description: data.items[0].volumeInfo.description ?? '',
+          img: data.items[0].volumeInfo.imageLinks.thumbnail ?? '',
+          idBook: uuidv4()
+        })
+
         addBook({
-          title: data.items[0].volumeInfo.title,
-          author: data.items[0].volumeInfo.authors[0].displayName,
-          description: data.items[0].volumeInfo.description,
-          img: data.items[0].volumeInfo.imageLinks.thumbnail,
+          title: data.items[0].volumeInfo.title ?? '',
+          author: data.items[0].volumeInfo.authors[0] ?? '',
+          description: data.items[0].volumeInfo.description ?? '',
+          img: data.items[0].volumeInfo.imageLinks.thumbnail ?? '',
           idBook: uuidv4()
         })
       })
