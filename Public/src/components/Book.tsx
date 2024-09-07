@@ -1,4 +1,5 @@
 import { BookBaseData } from '../types'
+import { useBooksStore } from '../global/booksStore'
 
 function Book({
   book,
@@ -7,6 +8,9 @@ function Book({
   book: BookBaseData
   openModal: (book: BookBaseData) => void
 }) {
+  const { removeBook } = useBooksStore((state) => ({
+    removeBook: state.removeBook
+  }))
   const DeleteBook = () => {
     fetch(`https://limecbooks.onrender.com/api/books/${book._id}`, {
       method: 'DELETE'
@@ -28,7 +32,14 @@ function Book({
       <p className="text-muted-foreground">{book.author}</p>
       <div>
         {/* <button>✏️</button> */}
-        <button onClick={DeleteBook}>❌</button>
+        <button
+          onClick={(e) => {
+            e.stopPropagation()
+            removeBook(book._id)
+          }}
+        >
+          ❌
+        </button>
       </div>
     </div>
   )

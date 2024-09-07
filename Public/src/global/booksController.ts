@@ -26,46 +26,9 @@ export const addBook = (book: BookBaseData) => {
   return [...mocksBooks, book]
 }
 
-// export const removeBook = (idBook: string) => {
-//   fetch(url, {
-//     method: 'DELETE',
-//     headers: {
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify({
-//       idBook: idBook
-//     })
-//   })
-// }
-
-// export const removeBook = (idBook: string) => {
-//   const newBooks = books.filter((book) => book.idBook !== idBook)
-//   localStorage.setItem('books', JSON.stringify(newBooks))
-//   books.splice(books.indexOf(idBook), 1)
-// }
-
-// export const getBooks = () => {
-//   const storedBooks = localStorage.getItem('books')
-//   if (storedBooks) {
-//     return JSON.parse(storedBooks)
-//   }
-//   return books
-// }
-
-// export const getBook = (idBook: string) => {
-//   const storedBooks = localStorage.getItem('books')
-//   if (storedBooks) {
-//     return JSON.parse(storedBooks).find((book) => book.idBook === idBook)
-//   }
-//   return books.find((book) => book.idBook === idBook)
-// }
-
-// export const updateBook = (book: BookBaseData) => {
-//   const newBooks = books.map((book) => {
-//     if (book.idBook === book.idBook) {
-//       return book
-//     }
-//     return book
-//   })
-//   localStorage.setItem('books', JSON.stringify(newBooks))
-// }
+export const removeBook = (idBook: string) => {
+  fetch(`https://limecbooks.onrender.com/api/books/${idBook}`, {
+    method: 'DELETE'
+  })
+  console.log(idBook)
+}

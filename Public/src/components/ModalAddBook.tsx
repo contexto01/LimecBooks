@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { toast } from 'sonner'
-import { addBook } from '../global/booksController'
-import { books } from '../data/books'
+// import { addBook } from '../global/booksController'
+import { useBooksStore } from '../global/booksStore'
 // import exp from 'constants'
 
 const ModalAddBook = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
@@ -11,6 +11,10 @@ const ModalAddBook = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
     author: '',
     description: ''
   })
+  const { books, addBook } = useBooksStore((state) => ({
+    books: state.books,
+    addBook: state.addBook
+  }))
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -28,43 +32,30 @@ const ModalAddBook = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
       author: '',
       description: ''
     })
-    // fetch('https://limecbooks.onrender.com/api/books', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify({
-    //     title: values.title,
-    //     author: values.author,
-    //     description: values.description,
-    //     img: '',
-    //     idBook: uuidv4()
-    //   })
-    // }).catch((error) => console.log(error))
-    // console.log(values)
-    addBook({
-      title: values.title,
-      author: values.author,
-      description: values.description,
-      img: '',
-      idBook: uuidv4()
-    })
-    console.log(localStorage.getItem('books'))
+    fetch(`https://www.googleapis.com/books/v1/volumes?q=${values.title}`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data)
+        addBook({
+          title: data.items[0].volumeInfo.title,
+          author: data.items[0].volumeInfo.authors[0].displayName,
+          description: data.items[0].volumeInfo.description,
+          img: data.items[0].volumeInfo.imageLinks.thumbnail,
+          idBook: uuidv4()
+        })
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+
+    console.log(books)
     onClose()
   }
-
-  // const openAddBookModal = () => {
-  //   setAddBookModal(true)
-  // }
-
-  // const closeAddBookModal = () => {
-  //   setAddBookModal(false)
-  // }
 
   if (!isOpen) return null
   return (
     <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
-      <div className=" flex gap-4 flex-wrap sm:flex-nowrap backdrop-blur-md dark:bg-black bg-white bg-opacity-70 p-8 rounded-lg w-full max-w-4xl relative max-h-[90vh] overflow-y-auto">
+      <div className=" flex gap-4 flex-col flex-wrap sm:flex-nowrap backdrop-blur-md dark:bg-black bg-white bg-opacity-70 p-8 rounded-lg w-full max-w-4xl relative max-h-[90vh] overflow-y-auto">
         <button onClick={onClose} className="absolute top-4 right-4 text-2xl font-bold">
           {' '}
           &times;{' '}
@@ -79,8 +70,9 @@ const ModalAddBook = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
             value={values.title}
             name="title"
             onChange={handleChange}
+            autoFocus
           />
-          <label htmlFor="author">Autor</label>
+          {/* <label htmlFor="author">Autor</label>
           <input
             type="text"
             id="author"
@@ -96,7 +88,7 @@ const ModalAddBook = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
             value={values.description}
             name="description"
             onChange={handleChange}
-          ></textarea>
+          ></textarea> */}
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Añadir libro
           </button>
