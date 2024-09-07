@@ -1,6 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { toast } from 'sonner'
+import { addBook } from '../global/booksController'
+import { books } from '../data/books'
 // import exp from 'constants'
 
 const ModalAddBook = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
@@ -26,20 +28,28 @@ const ModalAddBook = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
       author: '',
       description: ''
     })
-    fetch('https://limecbooks.onrender.com/api/books', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        title: values.title,
-        author: values.author,
-        description: values.description,
-        img: '',
-        idBook: uuidv4()
-      })
-    }).catch((error) => console.log(error))
-    console.log(values)
+    // fetch('https://limecbooks.onrender.com/api/books', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify({
+    //     title: values.title,
+    //     author: values.author,
+    //     description: values.description,
+    //     img: '',
+    //     idBook: uuidv4()
+    //   })
+    // }).catch((error) => console.log(error))
+    // console.log(values)
+    addBook({
+      title: values.title,
+      author: values.author,
+      description: values.description,
+      img: '',
+      idBook: uuidv4()
+    })
+    console.log(localStorage.getItem('books'))
     onClose()
   }
 

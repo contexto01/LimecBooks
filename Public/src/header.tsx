@@ -30,7 +30,7 @@ function Header() {
         </div>
       </div>
       <img
-        src="https://scontent.fclo5-1.fna.fbcdn.net/v/t39.30808-6/300774708_414172600806952_7466789840785667294_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeFJPNhePApibNNJs61GO_vN2xyWrepO2ErbHJat6k7YSmjqVZduxHo5UCvFoqmz7RTXY-cHFj-BTXMJna9a2D2e&_nc_ohc=kEuQ6gtpcrMQ7kNvgHvPe6X&_nc_ht=scontent.fclo5-1.fna&_nc_gid=AF47nhpCPjRHR8DsFk5XAuF&oh=00_AYBVmyipF2A2xUl54tmKQk7eTmxHoxoDNG9LpyMXvJFTMA&oe=66D84309"
+        src="/LIMECICOHEADER.jfif"
         alt="logo"
         className="w-2/4 h-2/4 max-w-[400px] max-h-[400px] min-w-[200px] min-h-[200px] rounded-full filter drop-shadow-lg"
       />
