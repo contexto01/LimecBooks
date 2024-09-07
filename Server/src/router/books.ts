@@ -43,6 +43,7 @@ router.post('/api/books', async (req, res) => {
     img: req.body.img,
     idBook: req.body.idBook,
     status: req.body.status,
+    categories: req.body.categories,
     createdAt: new Date(),
     updatedAt: new Date()
   })

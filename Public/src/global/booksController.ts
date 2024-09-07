@@ -32,3 +32,12 @@ export const removeBook = (idBook: string) => {
   })
   console.log(`https://limecbooks.onrender.com/api/books/${idBook}`)
 }
+
+export const searchBook = (name: string) => {
+  fetch(`https://limecbooks.onrender.com/api/books/${name}`)
+    .then((res) => res.json())
+    .then((data) => {
+      return data
+    })
+    .catch((error) => console.log(error))
+}

@@ -7,6 +7,7 @@ import { Toaster } from 'sonner'
 import ModalAddBook from './components/ModalAddBook'
 import Book from './components/Book'
 import { useBooksStore } from './global/booksStore'
+import FilterModal from './components/FilterModal'
 
 function BooksAdded() {
   // const [booksAdded, setBooksAdded] = useState<BookBaseData[]>([])
@@ -23,6 +24,7 @@ function BooksAdded() {
     fetchBooks: state.fetchBooks,
     addBook: state.addBook
   }))
+
   // const isLoading = useFetchBooks()
   // let isLoading
 
@@ -127,14 +129,15 @@ function BooksAdded() {
   }
 
   return (
-    <article className="md:p-4 w-full mx-auto mb-20">
+    <article className="md:p-4 w-full mx-auto mb-5">
       {!loading && (
         <section>
           <div className="flex justify-center sm:justify-between items-baseline flex-wrap gap-x-10 mb-5">
             <h2 className="text-3xl font-bold text-center">Libros Disponibles</h2>
+            <FilterModal />
             <button onClick={openAddBookModal}>➕ Añadir libro</button>
           </div>
-          <div className="grid w-full grid-cols-auto-fit-200 mb-14 gap-4">
+          <div className="grid w-full grid-cols-auto-fit-200  gap-4">
             {books.map((book) => (
               <Book book={book} openModal={openModal} />
             ))}
