@@ -9,7 +9,7 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      external: ['aos'] // Si deseas externalizar el módulo
+      external: ['aos/dist/aos.css'] // Si deseas externalizar el módulo
     }
   }
 })
