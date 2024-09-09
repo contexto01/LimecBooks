@@ -4,6 +4,7 @@ import { toast } from 'sonner'
 // import { addBook } from '../global/booksController'
 import { useBooksStore } from '../global/booksStore'
 // import exp from 'constants'
+import { categoryTranslations } from '../data/Translations'
 
 const ModalAddBook = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
   const [values, setValues] = useState({
@@ -32,6 +33,9 @@ const ModalAddBook = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
       author: '',
       description: ''
     })
+    // data.items[0].volumeInfo.categories.map(
+    //   (category) => categoryTranslations[category]
+    // ),
     fetch(`https://www.googleapis.com/books/v1/volumes?q=${values.title}`)
       .then((res) => res.json())
       .then((data) => {
@@ -40,6 +44,12 @@ const ModalAddBook = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
           author: data.items[0].volumeInfo.authors[0] ?? ' ',
           description: data.items[0].volumeInfo.description ?? ' ',
           img: data.items[0].volumeInfo.imageLinks.thumbnail ?? ' ',
+          // categories: data.items[0].volumeInfo.categories ?? [],
+          categories: data.items[0].volumeInfo.categories
+            ? data.items[0].volumeInfo.categories.map(
+                (category: string) => categoryTranslations[category] || category
+              )
+            : [],
           idBook: uuidv4()
         })
 
@@ -48,8 +58,20 @@ const ModalAddBook = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
           author: data.items[0].volumeInfo.authors[0] ?? ' ',
           description: data.items[0].volumeInfo.description ?? ' ',
           img: data.items[0].volumeInfo.imageLinks.thumbnail ?? ' ',
+          categories: data.items[0].volumeInfo.categories
+            ? data.items[0].volumeInfo.categories.map(
+                (category: string) => categoryTranslations[category] || category
+              )
+            : [],
           idBook: uuidv4()
         })
+        console.log(
+          data.items[0].volumeInfo.categories
+            ? data.items[0].volumeInfo.categories.map(
+                (category: string) => categoryTranslations[category] || category
+              )
+            : []
+        )
       })
       .catch((err) => {
         console.log(err)
@@ -79,23 +101,6 @@ const ModalAddBook = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
             onChange={handleChange}
             autoFocus
           />
-          {/* <label htmlFor="author">Autor</label>
-          <input
-            type="text"
-            id="author"
-            name="author"
-            value={values.author}
-            className="border-2 border-gray-300 rounded-lg p-2"
-            onChange={handleChange}
-          />
-          <label htmlFor="description">Descripción</label>
-          <textarea
-            id="description"
-            className="border-2 border-gray-300 rounded-lg p-2"
-            value={values.description}
-            name="description"
-            onChange={handleChange}
-          ></textarea> */}
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Añadir libro
           </button>

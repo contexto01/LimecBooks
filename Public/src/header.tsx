@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useBooksStore } from './global/booksStore'
 
 function Header() {
@@ -31,7 +31,7 @@ function Header() {
           necesita.
         </p>
 
-        <form className="flex gap-2 flex-wrap mt-72" onSubmit={handleSubmit}>
+        <form className="flex gap-2 flex-wrap mt-72" onSubmit={() => handleSubmit}>
           <input
             type="text"
             id="searchInput"

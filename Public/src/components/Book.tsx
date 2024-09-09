@@ -11,6 +11,7 @@ function Book({
   const { removeBook } = useBooksStore((state) => ({
     removeBook: state.removeBook
   }))
+
   return (
     <div
       key={book.idBook}
@@ -24,6 +25,11 @@ function Book({
         className="w-full h-48 object-cover object-top rounded-md"
       />
       <p className="text-muted-foreground">{book.author}</p>
+      {book.categories.length > 0 && (
+        <p className="p-0.5 bg-gray-300 dark:bg-gray-900  text-center rounded">
+          {book.categories.join(', ')}
+        </p>
+      )}
       <div>
         {/* <button>✏️</button> */}
         <button

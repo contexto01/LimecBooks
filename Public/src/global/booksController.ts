@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid'
 import { mocksBooks } from '../data/books'
-import { BookBaseData } from '../types'
+import { BookBaseData, FilterValue } from '../types'
 
 const url = 'https://limecbooks.onrender.com/api/books'
 
@@ -14,6 +14,7 @@ export const addBook = (book: BookBaseData) => {
       title: book.title,
       author: book.author,
       description: book.description,
+      categories: book.categories,
       img: book.img,
       idBook: uuidv4()
     })
@@ -41,3 +42,5 @@ export const searchBook = (name: string) => {
     })
     .catch((error) => console.log(error))
 }
+
+export const handleBookFilter = (filter: FilterValue): FilterValue => filter

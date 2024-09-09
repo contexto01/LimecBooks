@@ -1,19 +1,33 @@
 import { create } from 'zustand'
-import { BookBaseData } from '../types'
-import { addBook, removeBook, searchBook } from './booksController'
-// import { mocksBooks } from '../data/books'
+import { type BookBaseData, type FilterValue } from '../types'
+import { addBook, removeBook } from './booksController'
 
 interface BooksStore {
   books: BookBaseData[]
   loading: boolean
+  filterSelected: FilterValue[]
+
+  handleBookFilter: (filters: FilterValue[]) => void
+  filterBooks: () => BookBaseData[]
   removeBook: (idBook: string) => void
   fetchBooks: () => void
   addBook: (book: BookBaseData) => void
   searchBook: (name: string) => void
 }
 
-export const useBooksStore = create<BooksStore>((set) => ({
+export const useBooksStore = create<BooksStore>((set, get) => ({
   books: [],
+  loading: true,
+  filterSelected: [],
+  filterBooks: () => {
+    const { books, filterSelected } = get()
+    if (filterSelected.length === 0) return books // If no filters are selected, return all books
+    return books.filter(
+      (book: BookBaseData) =>
+        filterSelected.includes('all') ||
+        filterSelected.some((filter) => book.categories.includes(filter))
+    )
+  },
   addBook: (book: BookBaseData) => {
     addBook(book)
     set((state) => ({
@@ -26,10 +40,6 @@ export const useBooksStore = create<BooksStore>((set) => ({
       books: state.books.filter((book) => book.idBook !== idBook)
     }))
   },
-  // booksChange: () => {
-  //   set({ books: mocksBooks })
-  // }
-  loading: true,
   fetchBooks: async () => {
     set({ loading: true })
     try {
@@ -42,10 +52,6 @@ export const useBooksStore = create<BooksStore>((set) => ({
     }
   },
   searchBook: async (name: string) => {
-    // searchBook(name)
-    // set((state) => ({
-    //   books: state.books.filter((book) => book.title.includes(name))
-    // }))
     set({ loading: true })
     try {
       const response = await fetch(`https://limecbooks.onrender.com/api/books/${name}`)
@@ -55,5 +61,8 @@ export const useBooksStore = create<BooksStore>((set) => ({
       console.error('Error fetching books:', error)
       set({ loading: false })
     }
+  },
+  handleBookFilter: (filters: FilterValue[]) => {
+    set({ filterSelected: filters })
   }
 }))

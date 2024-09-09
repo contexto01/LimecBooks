@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { BookBaseData } from './types'
-import Modal from './components/BookDetail2'
+import Modal from './components/BookDetail'
 import { Toaster } from 'sonner'
 import ModalAddBook from './components/ModalAddBook'
 import Book from './components/Book'
@@ -18,15 +18,15 @@ function BooksAdded() {
   )
   // const [isLoading, setIsLoading] = useState(true)
   // const { books, booksChange } = useBooksStore()
-  const { books, loading, fetchBooks } = useBooksStore((state) => ({
+  const { loading, fetchBooks, filterBooks, filterSelected } = useBooksStore((state) => ({
     books: state.books,
     loading: state.loading,
+    filterSelected: state.filterSelected,
     fetchBooks: state.fetchBooks,
-    addBook: state.addBook
+    addBook: state.addBook,
+    filterBooks: state.filterBooks,
+    handleBookFilter: state.handleBookFilter
   }))
-
-  // const isLoading = useFetchBooks()
-  // let isLoading
 
   useEffect(() => {
     const handleChange = (e: MediaQueryListEvent) => setIsDarkMode(e.matches)
@@ -43,6 +43,10 @@ function BooksAdded() {
       mediaQuery.removeEventListener('change', handleChange)
     }
   }, [])
+
+  useEffect(() => {
+    console.log(filterSelected)
+  }, [filterSelected])
 
   const openAddBookModal = () => setAddBookModal(true)
 
@@ -138,7 +142,7 @@ function BooksAdded() {
             <button onClick={openAddBookModal}>➕ Añadir libro</button>
           </div>
           <div className="grid w-full grid-cols-auto-fit-200  gap-4">
-            {books.map((book) => (
+            {filterBooks().map((book) => (
               <Book book={book} openModal={openModal} />
             ))}
           </div>
