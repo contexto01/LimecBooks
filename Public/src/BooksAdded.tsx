@@ -45,8 +45,8 @@ function BooksAdded() {
   }, [])
 
   useEffect(() => {
-    console.log(filterSelected)
-  }, [filterSelected])
+    console.log(filterBooks())
+  }, [filterBooks])
 
   const openAddBookModal = () => setAddBookModal(true)
 
@@ -136,15 +136,22 @@ function BooksAdded() {
     <article className="md:p-4 w-full mx-auto mb-5">
       {!loading && (
         <section>
-          <div className="flex justify-center sm:justify-between items-baseline flex-wrap gap-x-10 mb-5">
+          <div
+            className="flex justify-center sm:justify-between items-baseline flex-wrap gap-x-10 mb-5"
+            data-aos="fade-down"
+          >
             <h2 className="text-3xl font-bold text-center">Libros Disponibles</h2>
             <FilterModal />
             <button onClick={openAddBookModal}>➕ Añadir libro</button>
           </div>
           <div className="grid w-full grid-cols-auto-fit-200  gap-4">
-            {filterBooks().map((book) => (
-              <Book book={book} openModal={openModal} />
-            ))}
+            {filterBooks().length === 0 ? (
+              <p className="text-center text-lg text-gray-500">No hay libros disponibles.</p>
+            ) : (
+              filterBooks().map((book) => (
+                <Book key={book.idBook} book={book} openModal={openModal} />
+              ))
+            )}
           </div>
         </section>
       )}

@@ -55,11 +55,20 @@ export const useBooksStore = create<BooksStore>((set, get) => ({
     set({ loading: true })
     try {
       const response = await fetch(`https://limecbooks.onrender.com/api/books/${name}`)
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status} ${response.statusText}`)
+      }
       const data = await response.json()
+
+      // Manejar caso donde no se encuentran libros
+      if (data.length === 0) {
+        console.warn('No books found for the search term:', name)
+      }
+
       set({ books: data, loading: false })
     } catch (error) {
       console.error('Error fetching books:', error)
-      set({ loading: false })
+      set({ books: [], loading: false }) // Limpiar los libros en caso de error
     }
   },
   handleBookFilter: (filters: FilterValue[]) => {
