@@ -18,7 +18,7 @@ function BooksAdded() {
   )
   // const [isLoading, setIsLoading] = useState(true)
   // const { books, booksChange } = useBooksStore()
-  const { loading, fetchBooks, filterBooks, filterSelected } = useBooksStore((state) => ({
+  const { loading, fetchBooks, filterBooks } = useBooksStore((state) => ({
     books: state.books,
     loading: state.loading,
     filterSelected: state.filterSelected,
