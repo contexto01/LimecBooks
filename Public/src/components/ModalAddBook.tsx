@@ -39,39 +39,27 @@ const ModalAddBook = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
     fetch(`https://www.googleapis.com/books/v1/volumes?q=${values.title}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log({
-          title: data.items[0].volumeInfo.title ?? ' ',
-          author: data.items[0].volumeInfo.authors[0] ?? ' ',
-          description: data.items[0].volumeInfo.description ?? ' ',
-          img: data.items[0].volumeInfo.imageLinks.thumbnail ?? ' ',
-          // categories: data.items[0].volumeInfo.categories ?? [],
-          categories: data.items[0].volumeInfo.categories
-            ? data.items[0].volumeInfo.categories.map(
-                (category: string) => categoryTranslations[category] || category
-              )
-            : [],
-          idBook: uuidv4()
-        })
+        const volumeInfo = data.items?.[0]?.volumeInfo || {}
+        const imageLinks = volumeInfo.imageLinks || {}
 
-        addBook({
-          title: data.items[0].volumeInfo.title ?? ' ',
-          author: data.items[0].volumeInfo.authors[0] ?? ' ',
-          description: data.items[0].volumeInfo.description ?? ' ',
-          img: data.items[0].volumeInfo.imageLinks.thumbnail ?? ' ',
-          categories: data.items[0].volumeInfo.categories
-            ? data.items[0].volumeInfo.categories.map(
+        const book = {
+          title: volumeInfo.title ?? ' ',
+          author: volumeInfo.authors?.[0] ?? ' ',
+          description: volumeInfo.description ?? ' ',
+          img: imageLinks.thumbnail ?? ' ',
+          categories: volumeInfo.categories
+            ? volumeInfo.categories.map(
                 (category: string) => categoryTranslations[category] || category
               )
             : [],
           idBook: uuidv4()
-        })
-        console.log(
-          data.items[0].volumeInfo.categories
-            ? data.items[0].volumeInfo.categories.map(
-                (category: string) => categoryTranslations[category] || category
-              )
-            : []
-        )
+        }
+
+        console.log(book)
+
+        addBook(book)
+
+        console.log(book.categories)
       })
       .catch((err) => {
         console.log(err)

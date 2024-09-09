@@ -10,7 +10,7 @@ import NavBar from './NavBar'
 function App() {
   return (
     <Router>
-      <main className="max-w-screen-lg mt-5 mx-auto">
+      <main className="flex-1">
         <NavBar />
         <Header />
         <BooksAdded />
@@ -20,8 +20,8 @@ function App() {
           <Route path="/books" element={<SearchBook />} />
           <Route path="/booksadded" element={<BooksAdded />} />
         </Routes> */}
-        <Footer />
       </main>
+      <Footer />
     </Router>
   )
 }

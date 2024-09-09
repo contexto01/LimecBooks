@@ -81,7 +81,7 @@ export default function FilterModal() {
         </svg>
       </button>
       <div
-        className={`absolute top-14 mt-2 right-0 w-56 p-3 rounded-lg shadow bg-slate-400 dark:bg-slate-900 backdrop-blur-md bg-opacity-50 dark:bg-opacity-80 ${
+        className={`absolute z-50 top-14 mt-2 right-0 w-56 p-3 rounded-lg shadow bg-slate-400 dark:bg-slate-900 backdrop-blur-md bg-opacity-50 dark:bg-opacity-80 max-h-52 overflow-y-auto ${
           isOpen ? 'block' : 'hidden'
         }`}
       >
