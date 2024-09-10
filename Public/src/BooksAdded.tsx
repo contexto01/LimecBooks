@@ -48,7 +48,7 @@ function BooksAdded() {
     console.log(filterBooks())
   }, [filterBooks])
 
-  const openAddBookModal = () => setAddBookModal(true)
+  // const openAddBookModal = () => setAddBookModal(true)
 
   const closeAddBookModal = () => setAddBookModal(false)
 
@@ -142,7 +142,7 @@ function BooksAdded() {
           >
             <h2 className="text-3xl font-bold text-center">Libros Disponibles</h2>
             <FilterModal />
-            <button onClick={openAddBookModal}>➕ Añadir libro</button>
+            {/* <button onClick={openAddBookModal}>➕ Añadir libro</button> */}
           </div>
           <div className="grid w-full grid-cols-auto-fit-200  gap-4">
             {filterBooks().length === 0 ? (

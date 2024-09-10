@@ -18,9 +18,9 @@ function Modal({
           &times;
         </button>
         <img
-          src={book.img}
+          src={book.img === ' ' ? `https://placehold.co/400x400?text=${book.title}` : book.img}
           alt={book.title}
-          className="w-full h-96 object-cover object-top rounded-backdrop-blur-sm mb-4"
+          className="w-full max-w-[30%] h-96 object-cover object-center rounded-backdrop-blur-sm mb-4"
         />
         {/* <div className="w-full h-96 bg-black"></div> */}
         <div>
