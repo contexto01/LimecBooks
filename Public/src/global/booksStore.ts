@@ -45,7 +45,7 @@ export const useBooksStore = create<BooksStore>((set, get) => ({
     try {
       const response = await fetch('https://limecbooks.onrender.com/api/books')
       const data = await response.json()
-      const books = data.map((book) => ({
+      const books = data.map((book: BookBaseData) => ({
         idBook: book.idBook,
         title: book.title,
         author: book.author,
@@ -114,7 +114,7 @@ export const useBooksStore = create<BooksStore>((set, get) => ({
           categories: book.categories,
           avalible: true
         })),
-        ...(googleData.items || []).map((item) => ({
+        ...(googleData.items || []).map((item: any) => ({
           idBook: item.id, // O cualquier otro campo único que puedas usar
           title: item.volumeInfo.title,
           author: item.volumeInfo.authors?.join(', ') || 'Unknown Author',
