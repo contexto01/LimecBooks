@@ -6,6 +6,7 @@ export interface BookBaseData {
   img: string
   categories: string[]
   idBook: string
+  avalible: boolean
 }
 
 export type FilterValue = (typeof BOOK_FILTERS)[keyof typeof BOOK_FILTERS]

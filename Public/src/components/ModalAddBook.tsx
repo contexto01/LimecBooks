@@ -52,7 +52,8 @@ const ModalAddBook = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
                 (category: string) => categoryTranslations[category] || category
               )
             : [],
-          idBook: uuidv4()
+          idBook: uuidv4(),
+          avalible: true
         }
 
         console.log(book)

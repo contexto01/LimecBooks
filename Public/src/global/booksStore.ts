@@ -45,7 +45,16 @@ export const useBooksStore = create<BooksStore>((set, get) => ({
     try {
       const response = await fetch('https://limecbooks.onrender.com/api/books')
       const data = await response.json()
-      set({ books: data, loading: false })
+      const books = data.map((book) => ({
+        idBook: book.idBook,
+        title: book.title,
+        author: book.author,
+        description: book.description,
+        img: book.img,
+        categories: book.categories,
+        avalible: true
+      }))
+      set({ books: books, loading: false })
     } catch (error) {
       console.error('Error fetching books:', error)
       set({ loading: false })
@@ -54,21 +63,71 @@ export const useBooksStore = create<BooksStore>((set, get) => ({
   searchBook: async (name: string) => {
     set({ loading: true })
     try {
-      const response = await fetch(`https://limecbooks.onrender.com/api/books/${name}`)
-      if (!response.ok) {
-        throw new Error(`Error: ${response.status} ${response.statusText}`)
+      // Primer petición a LimecBooks
+      if (name === '') {
+        const allBooksResponse = await fetch('https://limecbooks.onrender.com/api/books')
+        if (!allBooksResponse.ok) {
+          throw new Error(`Error: ${allBooksResponse.status} ${allBooksResponse.statusText}`)
+        }
+        const allBooksData: BookBaseData[] = await allBooksResponse.json()
+        const books = allBooksData.map((book) => ({
+          idBook: book.idBook,
+          title: book.title,
+          author: book.author,
+          description: book.description,
+          img: book.img,
+          categories: book.categories,
+          avalible: true
+        }))
+        set({ books: books, loading: false })
+        return
       }
-      const data = await response.json()
+      const limecResponse = await fetch(`https://limecbooks.onrender.com/api/books/${name}`)
 
-      // Manejar caso donde no se encuentran libros
-      if (data.length === 0) {
-        console.warn('No books found for the search term:', name)
+      let limecData: BookBaseData[] = []
+      // Si hay un error 404, podemos ignorar el resultado
+      if (limecResponse.ok) {
+        limecData = await limecResponse.json()
+      } else if (limecResponse.status !== 404) {
+        throw new Error(`Error: ${limecResponse.status} ${limecResponse.statusText}`)
+      } else {
+        console.warn('No books found in LimecBooks for the search term:', name)
       }
 
-      set({ books: data, loading: false })
+      // Segundo petición a Google Books
+      const googleResponse = await fetch(
+        `https://www.googleapis.com/books/v1/volumes?q=${name}`
+      )
+      if (!googleResponse.ok) {
+        throw new Error(`Error: ${googleResponse.status} ${googleResponse.statusText}`)
+      }
+      const googleData = await googleResponse.json()
+
+      // Combinar los libros de ambas APIs
+      const combinedBooks: BookBaseData[] = [
+        ...limecData.map((book) => ({
+          idBook: book.idBook,
+          title: book.title,
+          author: book.author,
+          description: book.description,
+          img: book.img,
+          categories: book.categories,
+          avalible: true
+        })),
+        ...(googleData.items || []).map((item) => ({
+          idBook: item.id, // O cualquier otro campo único que puedas usar
+          title: item.volumeInfo.title,
+          author: item.volumeInfo.authors?.join(', ') || 'Unknown Author',
+          description: item.volumeInfo.description || 'No description available.',
+          img: item.volumeInfo.imageLinks?.thumbnail || '',
+          categories: item.volumeInfo.categories || [],
+          avaliable: false
+        }))
+      ]
+      set({ books: combinedBooks, loading: false })
     } catch (error) {
       console.error('Error fetching books:', error)
-      set({ books: [], loading: false }) // Limpiar los libros en caso de error
+      set({ books: [], loading: false })
     }
   },
   handleBookFilter: (filters: FilterValue[]) => {

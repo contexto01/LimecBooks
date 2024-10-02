@@ -25,18 +25,34 @@ function Book({
         className="w-full h-56 object-cover object-top rounded-md"
       />
       <h3 className="font-bold m-0 truncate">{book.title}</h3>
-      <p className="text-muted-foreground text-sm overflow-hidden text-ellipsis whitespace-nowrap">
-        {book.author}
-      </p>
+      <div className="h-6">
+        {' '}
+        {/* Ajusta la altura según sea necesario */}
+        <p className="text-muted-foreground text-sm overflow-hidden text-ellipsis whitespace-nowrap">
+          {book.author !== '' ? book.author : 'Autor desconocido'}
+        </p>
+      </div>
       {book.categories.length > 0 && (
-        <p className="p-0.5 bg-gray-300 dark:bg-gray-900 text-center rounded">
+        <p className="p-1 bg-gray-300 dark:bg-gray-900 text-center rounded">
           {book.categories.join(', ')}
         </p>
       )}
 
       {book.categories.length === 0 && (
-        <p className="p-0.5 bg-gray-300 dark:bg-gray-900 text-center rounded">No categoría</p>
+        <p className="p-1 bg-gray-300 dark:bg-gray-900 text-center rounded">No categoría</p>
       )}
+      <div>
+        {book.avalible ? (
+          <p className=" p-1 text-sm inline-block bg-green-700 text-center rounded">
+            Disponible
+          </p>
+        ) : (
+          <p className=" p-1 text-sm inline-block bg-red-700 text-center rounded">
+            No disponible
+          </p>
+        )}
+      </div>
+
       <div>
         {/* <button>✏️</button> */}
         {/* <button
